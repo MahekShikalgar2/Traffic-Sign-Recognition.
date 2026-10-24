@@ -1,0 +1,34 @@
+{
+  "id": "FEAT-003",
+  "type": "test",
+  "description": "Write and run the unit test suite covering ModelService, PredictionService, and HistoryService. Also add sign information mapping (sign_info.py) and dataset class counts to config. Depends on FEAT-001. Independent of FEAT-002 (tests do not require the GUI).",
+  "status": "completed",
+  "steps": [
+    "1. Create src/sign_info.py — SIGN_INFO dict mapping class_id (0–42) to a dict with keys: name (from signs.classes[id+1]), category (one of: Speed Limits, Prohibitory, Mandatory, Warning, Other), meaning (1-sentence plain English meaning), driving_tip (1-sentence driving interpretation). Populate all 43 entries. Example: 0: {'name':'Speed limit (20km/h)','category':'Speed Limits','meaning':'Maximum speed 20 km/h in this zone.','driving_tip':'Reduce speed immediately to 20 km/h or below.'}. This data is used by predict_page.py to show the sign information card.",
+
+    "2. Update src/config.py to add DATASET_CLASS_COUNTS dict with the actual per-class image counts discovered during exploration: {0:157, 1:1980, 2:2010, 3:1260, 4:1770, 5:1650, 6:360, 7:1290, 8:1260, 9:1320, 10:1800, 11:1170, 12:1890, 13:1920, 14:690, 15:540, 16:360, 17:990, 18:1080, 19:180, 20:300, 21:270, 22:330, 23:450, 24:240, 25:1350, 26:540, 27:210, 28:480, 29:240, 30:390, 31:630, 32:270, 33:689, 34:420, 35:1200, 36:390, 37:210, 38:2010, 39:300, 40:360, 41:240, 42:240}. Note: these are approximate — the coder should use actual counts from the datasettraffic/ dir by scanning at runtime once on DatasetPage and caching, OR hardcode the values from exploration (total must equal 34776). If the sum does not match 34776, scan dynamically instead.",
+
+    "3. Create tests/test_model_service.py — unittest.TestCase. Uses unittest.mock to avoid loading the real model in CI. Tests: test_singleton_returns_same_instance, test_get_model_info_returns_required_keys (mocked), test_load_called_once (mock assert). Also one integration test (marked to skip if model file missing): test_real_model_loads_and_predicts — loads real model, creates a dummy 1x32x32x1 float32 array, calls predict, checks output shape is (1,43) and all values sum to ~1.0.",
+
+    "4. Create tests/test_prediction_service.py — unittest.TestCase. Tests with a real small test image from Output Images/ (o4.jpeg). Tests: test_predict_returns_required_keys — calls predict() on the test image, asserts result has keys predicted_class, predicted_label, confidence, top3, is_low_confidence, processing_time_ms. test_predicted_class_in_valid_range — pred_class is int 0–42. test_top3_sorted_descending — top3[0].probability >= top3[1].probability >= top3[2].probability. test_label_matches_signs_dict — signs.classes[result['predicted_class']+1] == result['predicted_label']. test_confidence_is_float_0_to_1 — 0.0 <= confidence <= 1.0. test_invalid_image_raises_error — passing None or a blank array raises ValueError or similar.",
+
+    "5. Create tests/test_history_service.py — unittest.TestCase. Uses a temp directory for the history JSON file (patch HISTORY_FILE in config). Tests: test_add_record_persists — add a record, reload HistoryService, get_all() returns it. test_get_all_newest_first — add 3 records with different timestamps, get_all() returns newest first. test_max_history_trimmed — add MAX_HISTORY+5 records, length is MAX_HISTORY. test_clear_history — after clear, get_all() returns []. test_get_stats_returns_keys — get_stats() returns dict with total_predictions, most_common_sign, avg_confidence. test_export_csv — exports CSV with correct headers (id, timestamp, predicted_label, confidence). Uses setUp/tearDown to create and clean temp dirs.",
+
+    "6. Run the full test suite and fix any failures before marking complete. Command: C:\\Users\\Mahek\\AppData\\Local\\Programs\\Python\\Python311\\python.exe -m unittest discover -s tests -p 'test_*.py' -v. All tests must pass (integration tests that need GUI are skipped with @unittest.skip or conditional skipIf).",
+
+    "7. Update predict_page.py (from FEAT-002) to use SIGN_INFO from sign_info.py: after showing prediction result, add a 'Sign Information' collapsible section (CTkFrame, initially shown) displaying category, meaning, and driving_tip for the predicted sign. If sign_info not found for a class_id, skip the section gracefully."
+  ],
+  "acceptance_criteria": [
+    "C:\\Users\\Mahek\\AppData\\Local\\Programs\\Python\\Python311\\python.exe -m unittest discover -s tests -p 'test_*.py' -v exits with 0 failures, 0 errors (some tests may be skipped).",
+    "test_real_model_loads_and_predicts passes when my_model.h5 is present.",
+    "test_predict_returns_required_keys passes using o4.jpeg from Output Images/.",
+    "All HistoryService tests pass with no filesystem side effects in the tests/ directory.",
+    "src/sign_info.py has entries for all 43 class IDs (0–42)."
+  ],
+  "verification": [
+    "C:\\Users\\Mahek\\AppData\\Local\\Programs\\Python\\Python311\\python.exe -m unittest discover -s tests -p 'test_*.py' -v",
+    "C:\\Users\\Mahek\\AppData\\Local\\Programs\\Python\\Python311\\python.exe -c \"from src.sign_info import SIGN_INFO; assert len(SIGN_INFO)==43, f'Expected 43 got {len(SIGN_INFO)}'; print('SIGN_INFO OK')\""
+  ],
+  "blocked_reason": null,
+  "findings": "All test files were already present from a prior step and pass with 0 failures/errors (33 tests). Created src/sign_info.py with 43 entries (class IDs 0–42). Verified DATASET_CLASS_COUNTS already in config.py with sum=34776. Updated predict_page.py to display a Sign Information card (category, meaning, driving_tip) after prediction results."
+}

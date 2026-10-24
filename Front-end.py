@@ -6,7 +6,7 @@ from signs import classes
 import numpy
 # load the trained model to classify sign
 from keras.models import load_model
-model = load_model('my_model (1).h5')
+model = load_model('my_model.h5')
 
 # initialise GUI
 top = tk.Tk()
@@ -21,11 +21,13 @@ sign_image = Label(top)
 def classify(file_path):
     global label_packed
     image = Image.open(file_path)
+    image = image.convert('L')       # convert to grayscale (model expects 1 channel)
     image = image.resize((32, 32))
-    image = numpy.expand_dims(image, axis=0)
     image = numpy.array(image)
+    image = numpy.expand_dims(image, axis=-1)  # add channel dim -> (32, 32, 1)
+    image = numpy.expand_dims(image, axis=0)   # add batch dim  -> (1, 32, 32, 1)
     print(image.shape)
-    pred = model.predict_classes([image])[0]
+    pred = numpy.argmax(model.predict(image), axis=-1)[0]
     sign = classes[pred+1]
     print(sign)
     label.configure(foreground='#364156', text=("Result: "+sign))

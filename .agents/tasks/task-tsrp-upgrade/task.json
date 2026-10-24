@@ -1,0 +1,7 @@
+{
+  "task_id": "task-tsrp-upgrade",
+  "task_description": "Upgrade the existing Traffic Sign Recognition project into a professional, modern, fully functional desktop application. Implement a multi-page CustomTkinter 5.2.2 GUI (dark AI-dashboard theme) with sidebar navigation, image upload, CNN inference via the existing my_model.h5 model, prediction history, dataset/model info pages, settings, and about page. Wire everything to the real trained model with correct preprocessing (grayscale, resize 32x32, /255, expand dims). Add structured service layer and unit tests.",
+  "status": "pending",
+  "feature_order": ["FEAT-001", "FEAT-002", "FEAT-003"],
+  "blocked_reason": null
+}

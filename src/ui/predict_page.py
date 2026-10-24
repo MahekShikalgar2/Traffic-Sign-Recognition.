@@ -21,6 +21,11 @@ from src.config import (
 from src.utils.validators import ImageValidator
 
 try:
+    from src.sign_info import SIGN_INFO
+except ImportError:
+    SIGN_INFO = {}
+
+try:
     import tkinterdnd2  # type: ignore
     HAVE_DND = True
 except ImportError:
@@ -360,6 +365,53 @@ class PredictPage(ctk.CTkFrame):
             lbl_text = entry.get("label", "Unknown")
             cid = entry.get("class_id", -1)
             self._make_top3_row(top3_card, i, i + 1, lbl_text, cid, prob, bar_colors[i])
+
+        # ── Sign Information card ─────────────────────────────────────
+        sign_data = SIGN_INFO.get(class_id)
+        if sign_data:
+            ctk.CTkLabel(
+                scroll, text="Sign Information",
+                font=("Segoe UI", 13, "bold"), text_color=TEXT,
+            ).grid(row=row_idx, column=0, padx=20, pady=(14, 6), sticky="w")
+            row_idx += 1
+
+            info_card = ctk.CTkFrame(scroll, fg_color="#1A2744", corner_radius=10,
+                                     border_width=1, border_color=BORDER)
+            info_card.grid(row=row_idx, column=0, sticky="ew", padx=20, pady=(0, 6))
+            info_card.columnconfigure(1, weight=1)
+            row_idx += 1
+
+            # Category badge
+            cat_row = ctk.CTkFrame(info_card, fg_color="transparent")
+            cat_row.grid(row=0, column=0, columnspan=2, padx=14, pady=(14, 4), sticky="w")
+            cat_badge = ctk.CTkFrame(cat_row, fg_color=CARD, corner_radius=6)
+            cat_badge.pack(side="left")
+            ctk.CTkLabel(
+                cat_badge, text=f"🏷  {sign_data['category']}",
+                font=("Segoe UI", 11), text_color=ACCENT,
+            ).pack(padx=10, pady=4)
+
+            # Meaning row
+            ctk.CTkLabel(
+                info_card, text="Meaning:",
+                font=("Segoe UI", 11, "bold"), text_color=SUBTEXT, anchor="nw",
+            ).grid(row=1, column=0, padx=(14, 8), pady=(8, 2), sticky="nw")
+            ctk.CTkLabel(
+                info_card, text=sign_data["meaning"],
+                font=("Segoe UI", 11), text_color=TEXT,
+                wraplength=320, justify="left", anchor="nw",
+            ).grid(row=1, column=1, padx=(0, 14), pady=(8, 2), sticky="nw")
+
+            # Driving tip row
+            ctk.CTkLabel(
+                info_card, text="Driving tip:",
+                font=("Segoe UI", 11, "bold"), text_color=SUBTEXT, anchor="nw",
+            ).grid(row=2, column=0, padx=(14, 8), pady=(4, 14), sticky="nw")
+            ctk.CTkLabel(
+                info_card, text=sign_data["driving_tip"],
+                font=("Segoe UI", 11), text_color=TEXT,
+                wraplength=320, justify="left", anchor="nw",
+            ).grid(row=2, column=1, padx=(0, 14), pady=(4, 14), sticky="nw")
 
         # ── Disclaimer note ───────────────────────────────────────────
         ctk.CTkLabel(
