@@ -1,8 +1,8 @@
 
-# Traffic Sign Recognition - Streamlit Cloud
 tensorflow==2.15.1
-numpy==1.26.4
+keras==2.15.0
+streamlit
 matplotlib==3.8.4
 Pillow==10.4.0
+numpy==1.26.4
 opencv-python-headless==4.10.0.82
-streamlit
