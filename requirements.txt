@@ -1,5 +1,5 @@
 # Traffic Sign Recognition — Streamlit Cloud requirements
-# Using tensorflow-cpu (no GPU needed on cloud) and opencv-headless (no display)
+# tensorflow-cpu: no GPU needed on cloud; opencv-headless: no display server
 
 tensorflow-cpu==2.15.1
 numpy==1.26.4

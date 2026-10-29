@@ -1,56 +1,62 @@
+# Traffic Sign Recognition Using CNN
 
-# Traffic-Sign-Recognition
+A Python-based traffic sign classification system using a Convolutional Neural Network (CNN) and the German Traffic Sign Recognition Benchmark (GTSRB) dataset.
 
-In this report, we propose a Convolutional Neural Network(CNN) for traffic sign classification that achieves outstanding performance using GTSRB.Since the traffic signs are various in number and design it can be difficult for one to memorize all of them correctly. This development presents a model that identifies a Traffic sign accurately, recognition is carried out in three stages: image preprocessing, feature detection , and recognition. The developed system is specifically designed to detect images invariants in viewing angle, rotation, variable lighting, very low false positive rate and computational time along with GUI speaking the recognised sign name out, which will be really helpful to alert the driver irrespective of his knowledge of traffic signs.
+The system classifies traffic sign images and displays the predicted sign through a graphical user interface (GUI), with speech output for the recognized sign.
 
-## CNN Model
+## Technologies Used
 
-![CNN Model](https://miro.medium.com/max/2000/1*lXdNveKOPqjTfnRXfQlNRA.png)
+- Python
+- TensorFlow / Keras
+- CNN
+- OpenCV
+- NumPy
+- Matplotlib
+- Scikit-learn
+- Tkinter
 
-  
-## Contributors 
+## Project Structure
 
-- [@TirthShah](https://www.github.com/tirth2212)
-- [@Vidhayini](https://www.github.com/vidhayini)
-- [@Isha Jain](https://www.github.com/ishajain1)
+```text
+Traffic-Sign-Recognition/
+├── datasettraffic/
+├── traffic_model.ipynb
+├── my_model.h5
+├── signs.py
+├── Front-end.py
+└── README.md
+```
 
+## Installation
 
-  
-## Deployment
+Clone the repository:
 
-To deploy this project run:
- - datasettraffic folder is the GTSRB dataset which is used to train the model;
- - Run The traffic_model.ipynb;
- - Then used the saved model i.e., my_model.h5 to recognise signs using GUI;
- - signs.py is used to store the list of classified signs for reference;
- - To run the GUI, run Front-end.py file.
+```bash
+git clone https://github.com/MahekShikalgar2/Traffic-Sign-Recognition.git
+cd Traffic-Sign-Recognition
+```
 
-  
-## Demo
-Link to the video of Front-end: https://youtu.be/iNIGG2xzUZA 
+Install the required libraries:
 
-  
-## Environment Variables
+```bash
+pip install opencv-python numpy tensorflow keras matplotlib scikit-learn pillow
+```
 
-To run this project, you will need to add the following libraries to your venv:-
+## Usage
 
-`openCV`
-`numpy`
-`keras`
-`matplotlib`
-`sci-kit learn`
-`pillow`
-`tkinter`
+1. Open `traffic_model.ipynb` and run the notebook to train the model.
+2. Ensure the trained model is saved as `my_model.h5`.
+3. Run the GUI application:
 
+```bash
+python Front-end.py
+```
 
-  
-## Documentation
+4. Select a traffic sign image to view its predicted class and hear the sign name.
 
-[Paper](https://drive.google.com/file/d/1C10Q-j7xY_xvWS1HOjBseLBifBErEx2j/view?usp=sharing)
+## Objective
 
-## Poster
+To recognize traffic signs using deep learning and provide predictions through a simple graphical interface with audio feedback.
 
-![Poster](https://github.com/Mini-Project-Jain-University/Traffic-Sign-Recognition/blob/main/Traffic%20Sign%20Recognition.png)
+---
 
-
-  
