@@ -1,14 +1,10 @@
-# Traffic Sign Recognition — pinned dependencies
-# All packages are installed under:
-#   C:\Users\Mahek\AppData\Local\Programs\Python\Python311\
-#
-# To install / verify:
-#   C:\Users\Mahek\AppData\Local\Programs\Python\Python311\python.exe -m pip install -r requirements.txt
+# Traffic Sign Recognition — Streamlit Cloud requirements
+# Using tensorflow-cpu (no GPU needed on cloud) and opencv-headless (no display)
 
-tensorflow==2.15.1
-keras==2.15.0
-customtkinter==5.2.2
-matplotlib==3.8.4
-Pillow==10.4.0
+tensorflow-cpu==2.15.1
 numpy==1.26.4
-opencv-python==4.10.0.82
+Pillow==10.4.0
+opencv-python-headless==4.9.0.80
+matplotlib==3.8.4
+pandas==2.2.2
+streamlit==1.35.0

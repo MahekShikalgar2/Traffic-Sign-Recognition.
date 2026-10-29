@@ -1,0 +1,40 @@
+# Dataset — too large for GitHub (34,776 images)
+datasettraffic/
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Logs & runtime state
+logs/
+*.log
+
+# Local database & history
+database/history.json
+database/history.db
+database/settings.json
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# IDE & OS
+.vscode/
+.idea/
+*.DS_Store
+Thumbs.db
+
+# Agent working files
+.agents/
+
+# Build artifacts
+dist/
+build/
+*.egg-info/
